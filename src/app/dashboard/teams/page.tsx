@@ -29,35 +29,30 @@ import {
 } from '@/shared/components/ui/tooltip'
 
 const personnelColumns = [
-  { 
-    key: 'fullName', 
-    title: 'Adı Soyadı',
-    type: 'string',
-    className: 'font-medium text-gray-900 dark:text-white'
+  {
+    accessorKey: 'fullName',
+    header: 'Adı Soyadı',
+    cell: ({ row }) => row.getValue('fullName'),
   },
-  { 
-    key: 'registrationNumber', 
-    title: 'Sicil No',
-    type: 'string',
-    className: 'text-gray-500 dark:text-gray-400'
+  {
+    accessorKey: 'registrationNumber',
+    header: 'Sicil No',
+    cell: ({ row }) => row.getValue('registrationNumber'),
   },
-  { 
-    key: 'idbNo', 
-    title: 'IDB No',
-    type: 'string',
-    className: 'text-gray-500 dark:text-gray-400'
+  {
+    accessorKey: 'idbNo',
+    header: 'IDB No',
+    cell: ({ row }) => row.getValue('idbNo'),
   },
-  { 
-    key: 'title', 
-    title: 'Ünvanı',
-    type: 'string',
-    className: 'text-gray-500 dark:text-gray-400'
+  {
+    accessorKey: 'title',
+    header: 'Ünvan',
+    cell: ({ row }) => row.getValue('title'),
   },
-  { 
-    key: 'email', 
-    title: 'Mail adresi',
-    type: 'string',
-    className: 'text-gray-500 dark:text-gray-400'
+  {
+    accessorKey: 'email',
+    header: 'E-posta',
+    cell: ({ row }) => row.getValue('email'),
   },
 ]
 
@@ -184,7 +179,6 @@ export default function TeamsPage() {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
   const [isAddMemberOpen, setIsAddMemberOpen] = useState(false)
   const [selectedPersonnel, setSelectedPersonnel] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (teams.length === 0) {
@@ -192,16 +186,7 @@ export default function TeamsPage() {
         dispatch(addTeam(team))
       })
     }
-    setIsLoading(false)
   }, [dispatch, teams.length])
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg text-gray-500 dark:text-gray-400">Yükleniyor...</div>
-      </div>
-    )
-  }
 
   const handleDeleteTeam = (team: Team) => {
     if (window.confirm(`"${team.name}" ekibini silmek istediğinizden emin misiniz?`)) {
@@ -255,7 +240,7 @@ export default function TeamsPage() {
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {teams?.map((team) => (
+        {teams.map((team) => (
           <div
             key={team.id}
             className="relative flex flex-col overflow-hidden rounded-lg bg-white dark:bg-gray-800 shadow transition-colors"
@@ -376,7 +361,7 @@ export default function TeamsPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                  {selectedTeam?.members?.map((member) => (
+                  {selectedTeam?.members.map((member) => (
                     <tr key={member.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                         {member.name}
@@ -453,10 +438,10 @@ export default function TeamsPage() {
       <div className="mt-12">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Personel Listesi</h2>
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
-          <DataTable
-            columns={personnelColumns}
-            initialData={personnel}
-            className="min-w-full"
+          <DataTable 
+            columns={personnelColumns} 
+            data={personnel} 
+            searchKey="fullName"
           />
         </div>
       </div>
