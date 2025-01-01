@@ -86,6 +86,42 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Proje Yapısı</h2>
+          <div className="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <pre className="text-sm text-gray-900 dark:text-gray-100 overflow-x-auto">
+{`src/
+├── app/                # Next.js App Router yapısı
+├── features/          # Feature-based modüller
+│   ├── auth/         # Kimlik doğrulama
+│   ├── dashboard/    # Dashboard özellikleri
+│   ├── tasks/        # Görev yönetimi
+│   └── teams/        # Ekip yönetimi
+├── shared/           # Paylaşılan kaynaklar
+│   ├── components/   # Genel componentler
+│   ├── hooks/        # Custom React hooks
+│   ├── lib/          # Üçüncü parti kütüphane konfigürasyonları
+│   ├── api/          # API istemcileri ve servisler
+│   ├── types/        # TypeScript tipleri
+│   ├── utils/        # Yardımcı fonksiyonlar
+│   └── store/        # Redux store yapılandırması`}
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Geliştirme Kuralları</h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <Rule title="TypeScript Kullanımı" description="TypeScript kullanımı zorunludur" />
+            <Rule title="Feature Bağımsızlığı" description="Her feature kendi içinde bağımsız olmalıdır" />
+            <Rule title="Atomik Tasarım" description="Shared componentler atomik tasarım prensiplerine uygun olmalıdır" />
+            <Rule title="Repository Pattern" description="API çağrıları için repository pattern kullanılmalıdır" />
+            <Rule title="State Yönetimi" description="State yönetimi için Redux Toolkit tercih edilmelidir" />
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -120,6 +156,15 @@ function Step({ number, title, children }: { number: number; title: string; chil
         <div className="ml-4 text-lg font-medium text-gray-900 dark:text-white">{title}</div>
       </div>
       <div className="mt-2 ml-12">{children}</div>
+    </div>
+  )
+}
+
+function Rule({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="relative p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-white">{title}</h3>
+      <p className="mt-2 text-base text-gray-500 dark:text-gray-400">{description}</p>
     </div>
   )
 }

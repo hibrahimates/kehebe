@@ -28,19 +28,21 @@ jobs:
           cache-dependency-path: khb-dashboard/package-lock.json
       - name: Install dependencies
         working-directory: khb-dashboard
-        run: npm ci
+        run: |
+          npm ci
+          npm install sharp
       - name: Build with Next.js
         working-directory: khb-dashboard
         env:
           NEXT_TELEMETRY_DISABLED: 1
-          SKIP_LINT: true
-        run: npm run build -- --no-lint
-      - name: Copy output to root
-        run: cp -r khb-dashboard/out ./out
+          NODE_ENV: production
+        run: |
+          npm run build
+          touch out/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: out
+          path: khb-dashboard/out
 
   deploy:
     environment:
