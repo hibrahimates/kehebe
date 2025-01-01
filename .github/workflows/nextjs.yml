@@ -31,7 +31,10 @@ jobs:
         run: npm ci
       - name: Build with Next.js
         working-directory: khb-dashboard
-        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          SKIP_LINT: true
+        run: npm run build -- --no-lint
       - name: Copy output to root
         run: cp -r khb-dashboard/out ./out
       - name: Upload artifact

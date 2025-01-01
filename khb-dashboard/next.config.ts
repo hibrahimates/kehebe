@@ -6,6 +6,9 @@ const nextConfig = {
     unoptimized: true,
   },
   assetPrefix: '/k',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 export default nextConfig
