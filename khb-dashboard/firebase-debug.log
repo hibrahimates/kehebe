@@ -1,0 +1,21 @@
+[debug] [2025-01-01T20:23:31.380Z] ----------------------------------------------------------------------
+[debug] [2025-01-01T20:23:31.382Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\atess\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-01-01T20:23:31.382Z] CLI Version:   13.29.1
+[debug] [2025-01-01T20:23:31.382Z] Platform:      win32
+[debug] [2025-01-01T20:23:31.382Z] Node Version:  v20.13.1
+[debug] [2025-01-01T20:23:31.382Z] Time:          Wed Jan 01 2025 23:23:31 GMT+0300 (GMT+03:00)
+[debug] [2025-01-01T20:23:31.383Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-01-01T20:23:31.387Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-01T20:23:31.388Z] > authorizing via signed-in user (hi.atess@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\deneysel\khb-dashboard
+
