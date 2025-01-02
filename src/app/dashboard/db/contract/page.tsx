@@ -1,13 +1,12 @@
 'use client'
 
 import { DataTable } from '@/shared/components/ui/data-table'
-import { useContractStore } from '@/features/contracts/store'
-import { useContractorStore } from '@/features/contractors/store'
+import { useState } from 'react'
 
 type ColumnType = 'string' | 'integer' | 'float' | 'date' | 'boolean' | 'select'
 
 const columns: { key: string; title: string; type: ColumnType; options?: { value: string; label: string }[] }[] = [
-  { key: 'Contract_ID', title: 'ID', type: 'integer' },
+  { key: 'id', title: 'ID', type: 'integer' },
   { key: 'Contract_Code', title: 'Sözleşme Kodu', type: 'string' },
   { key: 'Contract_Date', title: 'Sözleşme Tarihi', type: 'date' },
   { key: 'Contract_Number', title: 'Sözleşme Numarası', type: 'string' },
@@ -15,7 +14,10 @@ const columns: { key: string; title: string; type: ColumnType; options?: { value
     key: 'Contractor_Code', 
     title: 'Yüklenici', 
     type: 'select',
-    options: [] // Bu kısım contractor verisiyle doldurulacak
+    options: Array.from({ length: 20 }, (_, i) => ({
+      value: `CONT${String(i + 1).padStart(3, '0')}`,
+      label: `Yüklenici ${i + 1}`
+    }))
   },
   { key: 'Contract_Duration', title: 'Süre', type: 'string' },
   { key: 'Team_Members', title: 'İşle İlgilenen Takım', type: 'string' },
@@ -35,60 +37,22 @@ const columns: { key: string; title: string; type: ColumnType; options?: { value
   { key: 'Contract_Name', title: 'Sözleşme Adı', type: 'string' },
 ]
 
-const initialData = Array.from({ length: 100 }, (_, i) => ({
+const initialData = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   Contract_Code: `CNT${String(i + 1).padStart(3, '0')}`,
   Contract_Name: `Sözleşme ${i + 1}`,
-  Start_Date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0],
-  End_Date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0],
-  Status: ['Aktif', 'Tamamlandı', 'Beklemede'][Math.floor(Math.random() * 3)],
-  Value: Math.floor(Math.random() * 1000000) + 100000
+  Contract_Date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0],
+  Contract_Number: `SOZ-${String(i + 1).padStart(5, '0')}`,
+  Contractor_Code: `CONT${String(Math.floor(Math.random() * 20) + 1).padStart(3, '0')}`,
+  Contract_Duration: `${Math.floor(Math.random() * 365) + 30} Gün`,
+  Team_Members: `Takım ${Math.floor(Math.random() * 10) + 1}`,
+  In_Charge: `Sorumlu ${Math.floor(Math.random() * 20) + 1}`,
+  Case_Code: ['D', 'E', 'T', 'İ'][Math.floor(Math.random() * 4)],
+  Current_Contract: Math.random() > 0.3
 }))
 
 export default function ContractPage() {
-  const { 
-    contracts, 
-    addContract, 
-    updateContract, 
-    deleteContract 
-  } = useContractStore()
-
-  const { contractors } = useContractorStore()
-
-  // Contractor seçeneklerini columns'a ekle
-  columns[4].options = contractors.map(contractor => ({
-    value: contractor.Contractor_Code,
-    label: `${contractor.Contractor_Name} (${contractor.Contractor_Code})`
-  }))
-
-  const handleSubmit = (formData: any, isEdit: boolean) => {
-    if (isEdit) {
-      updateContract(formData)
-    } else {
-      addContract({
-        Contract_Code: formData.Contract_Code,
-        Contract_Date: formData.Contract_Date,
-        Contract_Number: formData.Contract_Number,
-        Contractor_Code: formData.Contractor_Code,
-        Contract_Duration: formData.Contract_Duration,
-        Team_Members: formData.Team_Members,
-        In_Charge: formData.In_Charge,
-        Case_Code: formData.Case_Code,
-        Current_Contract: formData.Current_Contract,
-        Contract_Name: formData.Contract_Name
-      })
-    }
-  }
-
-  // Görüntüleme için yüklenici kodlarını firma isimleriyle değiştir
-  const displayData = contracts.map(contract => {
-    const contractor = contractors.find(c => c.Contractor_Code === contract.Contractor_Code)
-    return {
-      ...contract,
-      Contractor_Code: contractor ? `${contractor.Contractor_Name} (${contractor.Contractor_Code})` : contract.Contractor_Code,
-      Case_Code: columns[8].options?.find(opt => opt.value === contract.Case_Code)?.label || contract.Case_Code
-    }
-  })
+  const [data] = useState(initialData)
 
   return (
     <div className="p-6">
@@ -103,9 +67,7 @@ export default function ContractPage() {
 
       <DataTable 
         columns={columns} 
-        initialData={displayData}
-        onDelete={deleteContract}
-        onSubmit={handleSubmit}
+        initialData={data}
       />
     </div>
   )
