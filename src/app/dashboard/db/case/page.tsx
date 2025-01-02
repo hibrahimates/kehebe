@@ -10,18 +10,13 @@ const columns: { key: string; title: string; type: ColumnType }[] = [
   { key: 'Case_Description', title: 'Vaka Açıklaması', type: 'string' },
 ]
 
-const initialData = [
-  {
-    Case_ID: 1,
-    Case_Code: 'CASE001',
-    Case_Description: 'Örnek vaka açıklaması 1',
-  },
-  {
-    Case_ID: 2,
-    Case_Code: 'CASE002',
-    Case_Description: 'Örnek vaka açıklaması 2',
-  },
-]
+const initialData = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  Case_Name: `Durum ${i + 1}`,
+  Case_Code: `CASE${String(i + 1).padStart(3, '0')}`,
+  Description: `Durum ${i + 1} açıklaması`,
+  Status: ['Aktif', 'Pasif', 'Beklemede'][Math.floor(Math.random() * 3)]
+}))
 
 export default function CasePage() {
   return (

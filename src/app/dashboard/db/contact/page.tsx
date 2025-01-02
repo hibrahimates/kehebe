@@ -1,65 +1,52 @@
 'use client'
 
 import { DataTable } from '@/shared/components/ui/data-table'
-import { useContactStore } from '@/features/contacts/store'
-import { useContractorStore } from '@/features/contractors/store'
+import { useState } from 'react'
 
-type ColumnType = 'string' | 'integer' | 'float' | 'date' | 'boolean' | 'select'
+type ColumnType = 'string' | 'integer' | 'float' | 'date' | 'boolean'
 
-const columns: { key: string; title: string; type: ColumnType; options?: { value: string; label: string }[] }[] = [
-  { key: 'Contact_ID', title: 'İletişim ID', type: 'integer' },
-  { key: 'Contact_Name', title: 'Ad Soyad', type: 'string' },
-  { key: 'Contact_Title', title: 'Ünvan', type: 'string' },
-  { key: 'Contact_Phone', title: 'Telefon', type: 'string' },
-  { key: 'Contact_Email', title: 'E-posta', type: 'string' },
-  { 
-    key: 'Contact_Company', 
-    title: 'Firma', 
-    type: 'select',
-    options: [] // Bu kısım useEffect ile doldurulacak
-  },
-  { key: 'Contact_Department', title: 'Departman', type: 'string' },
+const columns: { key: string; title: string; type: ColumnType }[] = [
+  { key: 'id', title: 'ID', type: 'integer' },
+  { key: 'Contact_Name', title: 'İletişim Adı', type: 'string' },
+  { key: 'Company_Name', title: 'Şirket', type: 'string' },
+  { key: 'Phone', title: 'Telefon', type: 'string' },
+  { key: 'Email', title: 'E-posta', type: 'string' },
+  { key: 'Department', title: 'Departman', type: 'string' }
 ]
 
-export default function ContactPage() {
-  const { 
-    contacts, 
-    addContact, 
-    updateContact, 
-    deleteContact 
-  } = useContactStore()
+const companies = [
+  'Aselsan', 'Türk Hava Yolları', 'Koç Holding', 'Sabancı Holding', 'Tüpraş',
+  'Ereğli Demir Çelik', 'Ford Otosan', 'Garanti BBVA', 'Akbank', 'İş Bankası',
+  'Turkcell', 'BİM', 'Yapı Kredi', 'Tofaş', 'Arçelik',
+  'Şişe Cam', 'Migros', 'Tekfen Holding', 'TAV Havalimanları', 'Enka İnşaat',
+  'Kardemir', 'Ülker', 'Vestel', 'Doğuş Otomotiv', 'Petkim',
+  'Türk Telekom', 'Pegasus', 'Koza Altın', 'Anadolu Efes', 'Coca Cola İçecek',
+  'Kordsa', 'Zorlu Enerji', 'Aksa Enerji', 'Alarko Holding', 'Aygaz',
+  'Çimsa', 'Soda Sanayii', 'Kartonsan', 'Logo Yazılım', 'Netaş'
+]
 
-  const { contractors } = useContractorStore()
+const departments = [
+  'Yönetim Kurulu', 'Genel Müdürlük', 'Finans', 'İnsan Kaynakları', 'Operasyon',
+  'Satış', 'Pazarlama', 'Bilgi Teknolojileri', 'Hukuk', 'İdari İşler'
+]
 
-  // Contractor seçeneklerini columns'a ekle
-  columns[5].options = contractors.map(contractor => ({
-    value: contractor.Contractor_Code,
-    label: `${contractor.Contractor_Name} (${contractor.Contractor_Code})`
-  }))
-
-  const handleSubmit = (formData: any, isEdit: boolean) => {
-    if (isEdit) {
-      updateContact(formData)
-    } else {
-      addContact({
-        Contact_Name: formData.Contact_Name,
-        Contact_Title: formData.Contact_Title,
-        Contact_Phone: formData.Contact_Phone,
-        Contact_Email: formData.Contact_Email,
-        Contact_Company: formData.Contact_Company,
-        Contact_Department: formData.Contact_Department
-      })
-    }
+const initialData = Array.from({ length: 100 }, (_, i) => {
+  const company = companies[Math.floor(Math.random() * companies.length)]
+  const department = departments[Math.floor(Math.random() * departments.length)]
+  const companyCode = company.toLowerCase().replace(/\s+/g, '')
+  
+  return {
+    id: i + 1,
+    Contact_Name: `${company} ${department} Yetkilisi`,
+    Company_Name: company,
+    Phone: `+90 ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')} ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')} ${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
+    Email: `contact@${companyCode}.com.tr`,
+    Department: department
   }
+})
 
-  // Görüntüleme için firma kodlarını firma isimleriyle değiştir
-  const displayData = contacts.map(contact => {
-    const contractor = contractors.find(c => c.Contractor_Code === contact.Contact_Company)
-    return {
-      ...contact,
-      Contact_Company: contractor ? `${contractor.Contractor_Name} (${contractor.Contractor_Code})` : contact.Contact_Company
-    }
-  })
+export default function ContactPage() {
+  const [data] = useState(initialData)
 
   return (
     <div className="p-6">
@@ -74,9 +61,8 @@ export default function ContactPage() {
 
       <DataTable 
         columns={columns} 
-        initialData={displayData}
-        onDelete={deleteContact}
-        onSubmit={handleSubmit}
+        initialData={data}
+        searchKey="Contact_Name"
       />
     </div>
   )

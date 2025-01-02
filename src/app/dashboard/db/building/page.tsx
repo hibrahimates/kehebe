@@ -83,39 +83,10 @@ export default function BuildingPage() {
   )
 }
 
-const initialData = [
-  {
-    Building_ID: 1,
-    Building_Name: 'A Blok',
-    Building_Code: 'A001',
-    NB_Code: 'NB001',
-    m2: 1500.50,
-    Building_Type: 'Ofis',
-    Fac_Name: 'Merkez Kampüs',
-    Contract_Code: 'CNT001',
-    User_Code: 'USR001',
-    RS_Contact: 'John Doe',
-    Op_Date: '2023-01-01',
-    Ex: true,
-    Comment: 'Test açıklama',
-    TP_Contact: 'Jane Smith',
-    As_Built: false,
-  },
-  {
-    Building_ID: 2,
-    Building_Name: 'B Blok',
-    Building_Code: 'B001',
-    NB_Code: 'NB002',
-    m2: 2000.75,
-    Building_Type: 'Depo',
-    Fac_Name: 'Lojistik Merkezi',
-    Contract_Code: 'CNT002',
-    User_Code: 'USR002',
-    RS_Contact: 'Alice Johnson',
-    Op_Date: '2023-02-15',
-    Ex: false,
-    Comment: 'İkinci test açıklama',
-    TP_Contact: 'Bob Wilson',
-    As_Built: true,
-  },
-] 
+const initialData = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  Building_Name: `Bina ${i + 1}`,
+  Building_Type: ['Üretim', 'Ofis', 'Altyapı', 'Depo', 'Sosyal'][Math.floor(Math.random() * 5)],
+  Floor_Count: Math.floor(Math.random() * 20) + 1,
+  Fac_Name: `Tesis ${Math.floor(Math.random() * 14) + 1}`
+})) 

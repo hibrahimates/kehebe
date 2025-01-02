@@ -41,33 +41,24 @@ const navigation = [
 ]
 
 const databases = [
-  { name: 'Building', href: '/dashboard/db/building', icon: BuildingOffice2Icon },
-  { name: 'BuildingType', href: '/dashboard/db/buildingtype', icon: BuildingStorefrontIcon },
+  { name: 'Facility', href: '/dashboard/db/facility', icon: BuildingOffice2Icon },
+  { name: 'Building', href: '/dashboard/db/building', icon: BuildingOfficeIcon },
+  { name: 'Building_Type', href: '/dashboard/db/building-type', icon: BuildingLibraryIcon },
   { name: 'Case', href: '/dashboard/db/case', icon: DocumentTextIcon },
   { name: 'City', href: '/dashboard/db/city', icon: MapPinIcon },
   { name: 'Contact', href: '/dashboard/db/contact', icon: PhoneIcon },
   { name: 'Contract', href: '/dashboard/db/contract', icon: DocumentDuplicateIcon },
-  { name: 'Contractor', href: '/dashboard/db/contractor', icon: UserIcon },
+  { name: 'Contractor', href: '/dashboard/db/contractor', icon: BriefcaseIcon },
   { name: 'Currency', href: '/dashboard/db/currency', icon: CurrencyDollarIcon },
   { name: 'Domain', href: '/dashboard/db/domain', icon: CircleStackIcon },
-  { name: 'DomainType', href: '/dashboard/db/domaintype', icon: BuildingLibraryIcon },
-  { name: 'Facility', href: '/dashboard/db/facility', icon: BuildingOfficeIcon },
+  { name: 'Domain_Type', href: '/dashboard/db/domain-type', icon: CircleStackIcon },
   { name: 'Floor', href: '/dashboard/db/floor', icon: BuildingOffice2Icon },
   { name: 'Job', href: '/dashboard/db/job', icon: BriefcaseIcon },
-  { name: 'RS', href: '/dashboard/db/rs', icon: DocumentDuplicateIcon },
+  { name: 'Rs', href: '/dashboard/db/rs', icon: DocumentDuplicateIcon },
   { name: 'Seat', href: '/dashboard/db/seat', icon: ClockIcon },
   { name: 'State', href: '/dashboard/db/state', icon: MapPinIcon },
   { name: 'Team', href: '/dashboard/db/team', icon: UserGroupIcon },
-  { name: 'User', href: '/dashboard/db/user', icon: UsersIcon },
-]
-
-const dbSubmenu = [
-  { name: 'Building', href: '/dashboard/db/building' },
-  { name: 'Building Type', href: '/dashboard/db/buildingtype' },
-  { name: 'City', href: '/dashboard/db/city' },
-  { name: 'Contractor', href: '/dashboard/db/contractor' },
-  { name: 'Contact', href: '/dashboard/db/contact' },
-  { name: 'Contract', href: '/dashboard/db/contract' },
+  { name: 'GMY', href: '/dashboard/db/gmy', icon: UsersIcon },
 ]
 
 export function Sidebar() {

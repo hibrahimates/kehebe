@@ -35,6 +35,16 @@ const columns: { key: string; title: string; type: ColumnType; options?: { value
   { key: 'Contract_Name', title: 'Sözleşme Adı', type: 'string' },
 ]
 
+const initialData = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  Contract_Code: `CNT${String(i + 1).padStart(3, '0')}`,
+  Contract_Name: `Sözleşme ${i + 1}`,
+  Start_Date: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0],
+  End_Date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0],
+  Status: ['Aktif', 'Tamamlandı', 'Beklemede'][Math.floor(Math.random() * 3)],
+  Value: Math.floor(Math.random() * 1000000) + 100000
+}))
+
 export default function ContractPage() {
   const { 
     contracts, 

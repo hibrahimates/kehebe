@@ -25,6 +25,15 @@ const columns: { key: string; title: string; type: ColumnType; options?: { value
   { key: 'Domain_Tel_Num', title: 'Telefon', type: 'string' },
 ]
 
+const initialData = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  Domain_Code: `DOM${String(i + 1).padStart(3, '0')}`,
+  Domain_Name: `Alan ${i + 1}`,
+  Domain_Type: ['Tip A', 'Tip B', 'Tip C', 'Tip D', 'Tip E'][Math.floor(Math.random() * 5)],
+  Description: `Alan ${i + 1} açıklaması`,
+  Status: ['Aktif', 'Pasif'][Math.floor(Math.random() * 2)]
+}))
+
 export default function DomainPage() {
   const { 
     domains, 

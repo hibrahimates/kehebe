@@ -11,6 +11,22 @@ const columns: { key: string; title: string; type: ColumnType }[] = [
   { key: 'Contractor_Code', title: 'Yüklenici Kodu', type: 'string' },
 ]
 
+const companyPrefixes = ['Yıldız', 'Anadolu', 'Türk', 'Mega', 'Global', 'Ege', 'Akdeniz', 'Karadeniz', 'Marmara', 'İç Anadolu']
+const companySuffixes = ['İnşaat', 'Yapı', 'Mühendislik', 'Mimarlık', 'Taahhüt', 'Proje', 'Teknik', 'Altyapı', 'Üstyapı', 'Grup']
+
+const initialData = Array.from({ length: 100 }, (_, i) => {
+  const prefix = companyPrefixes[Math.floor(Math.random() * companyPrefixes.length)]
+  const suffix = companySuffixes[Math.floor(Math.random() * companySuffixes.length)]
+  return {
+    id: i + 1,
+    Contractor_Name: `${prefix} ${suffix} A.Ş.`,
+    Contractor_Code: `CONT${String(i + 1).padStart(3, '0')}`,
+    Contact_Person: `Yetkili ${i + 1}`,
+    Phone: `+90 ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')} ${Math.floor(Math.random() * 1000).toString().padStart(3, '0')} ${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
+    Email: `info@${prefix.toLowerCase()}${suffix.toLowerCase()}.com.tr`
+  }
+})
+
 export default function ContractorPage() {
   const { 
     contractors, 
